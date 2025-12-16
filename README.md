@@ -32,4 +32,32 @@ docker run -d -p 8080:8080 bulletin-board
 ## RESTful API written in Go 
 
 If you would like to use a backend written in Go, [thewhitetulip](http://github.com/thewhitetulip) has written on. See [the source code](https://github.com/thewhitetulip/go-vue-events).
+
+
+## Git Guide
+
+### Add, Commit, Push
+- `git add .` → Add all files to staging area
+- `git commit -m "message"` → Commit changes with message
+- `git push` → Push changes to remote repo
+
+### Pull
+- `git pull` → Fetch and merge changes from remote
+
+### Changing Remote URL
+- `git remote set-url origin <new-ssh-url>` → Change the remote repository URL
+
+### Stash, Revert, Reset
+- `git stash` → Temporarily save changes without committing
+- `git stash apply` → Reapply stashed changes
+- `git revert <commit>` → Undo a commit by creating a new commit
+- `git reset --soft <commit>` → Move HEAD to commit, keep changes staged
+- `git reset --hard <commit>` → Move HEAD to commit, discard changes
+
+### Log, Diff, Show
+- `git log --oneline` → Show commit history in one line per commit
+- `git diff` → Show changes in working directory not yet staged
+- `git diff --staged` → Show changes staged for commit
+- `git show <commit>` → Show details of a specific commit
+
  
