@@ -34,5 +34,9 @@ app.get('/api/events', api.events);
 app.post('/api/events', api.event);
 app.delete('/api/events/:eventId', api.event);
 
-app.listen(8080);
-console.log('Magic happens on port 8080...');
+if (require.main === module) {
+  app.listen(8080, () => {
+    console.log('Magic happens on port 8080...');
+  });
+}
+
