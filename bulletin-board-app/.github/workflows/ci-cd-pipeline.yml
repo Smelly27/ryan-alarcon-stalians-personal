@@ -23,36 +23,27 @@ jobs:
         with:
           node-version: '20'
 
-      # Step 3: Install dependencies inside the bulleting-board-app folder
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          cd bulletin-board-app
           npm install
-        working-directory: ./bulletin-board-app
 
       # Step 4: Run tests
       - name: Run tests
         run: |
-          cd bulletin-board-app
           npm run test
-        working-directory: ./bulletin-board-app
 
       # Step 5: Run tests with coverage
-      - name: Run tests with coverage
+      - name: Run test coverage
         run: |
-          cd bulletin-board-app
           npm run test:coverage
-        working-directory: ./bulletin-board-app
 
       # Step 6: Build Docker image
       - name: Build Docker image
         run: |
-          cd bulletin-board-app
           docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest .
-        working-directory: ./bulletin-board-app
 
       # Step 7: Push Docker image to Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest
-        working-directory: ./bulletin-board-app
