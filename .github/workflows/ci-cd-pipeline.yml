@@ -13,42 +13,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Check out the repository
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    # Set up Node.js (use npm version 20)
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
 
-    # Install npm dependencies
-    - name: Install dependencies
-      run: npm install
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          cd bulletin-board-app
+          npm install
 
-    # Run tests
-    - name: Run tests
-      run: npm run test
+      # Step 4: Run tests
+      - name: Run tests
+        run: |
+          cd bulletin-board-app
+          npm run test
 
-    # Run coverage tests
-    - name: Run coverage tests
-      run: npm run test:coverage
+      # Step 5: Run tests with coverage
+      - name: Run test coverage
+        run: |
+          cd bulletin-board-app
+          npm run test:coverage
 
-    # Build Docker image
-    - name: Build Docker image
-      run: |
-        docker build -t bulletin-board-app:latest .
+      # Step 6: Build Docker image
+      - name: Build Docker image
+        run: |
+          cd bulletin-board-app
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest .
 
-    # Log in to Docker Hub
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    # Push Docker image to Docker Hub
-    - name: Push Docker image
-      run: |
-        docker tag bulletin-board-app:latest ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest
+      # Step 7: Push Docker image to Docker Hub
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest
