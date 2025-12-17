@@ -13,22 +13,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: |
+        cd bulletin-board-app
+        npm install
 
-      - name: Run tests
-        run: npm run test
+    - name: Run tests
+      run: |
+        cd bulletin-board-app
+        npm run test
 
-      - name: Build and deploy Docker image
-        run: |
-          docker build -t bulletin-board-app:latest .
-          docker tag bulletin-board-app:latest your-dockerhub-username/bulletin-board-app:latest
-          docker push your-dockerhub-username/bulletin-board-app:latest
+    - name: Run tests with coverage
+      run: |
+        cd bulletin-board-app
+        npm run test:coverage
+
+    - name: Build Docker image
+      run: |
+        cd bulletin-board-app
+        docker build -t bulletin-board-app:latest .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker tag bulletin-board-app:latest Smelly27/bulletin-board-app:latest
+        docker push Smelly27/bulletin-board-app:latest
