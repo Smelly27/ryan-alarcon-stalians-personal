@@ -23,19 +23,22 @@ jobs:
         with:
           node-version: '20'
 
-      # Step 3: Install dependencies
+      # Step 3: Install dependencies in the correct folder
       - name: Install dependencies
         run: |
+          cd bulletin-board-app
           npm install
 
       # Step 4: Run tests
       - name: Run tests
         run: |
+          cd bulletin-board-app
           npm run test
 
       # Step 5: Run tests with coverage
       - name: Run test coverage
         run: |
+          cd bulletin-board-app
           npm run test:coverage
 
       # Step 6: Build Docker image
