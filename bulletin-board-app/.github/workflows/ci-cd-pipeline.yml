@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -20,28 +20,32 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '20'
-
+    
     - name: Install dependencies
       run: |
         cd bulletin-board-app
         npm install
-
+      working-directory: ./bulletin-board-app  # Make sure we are inside the app directory
+    
     - name: Run tests
       run: |
         cd bulletin-board-app
         npm run test
-
-    - name: Run tests with coverage
+      working-directory: ./bulletin-board-app  # Ensure tests run from the correct directory
+    
+    - name: Run test coverage
       run: |
         cd bulletin-board-app
         npm run test:coverage
-
+      working-directory: ./bulletin-board-app  # Ensure test coverage runs from the correct directory
+    
     - name: Build Docker image
       run: |
         cd bulletin-board-app
-        docker build -t bulletin-board-app:latest .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest .
+      working-directory: ./bulletin-board-app  # Make sure the build happens in the right folder
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker tag bulletin-board-app:latest Smelly27/bulletin-board-app:latest
-        docker push Smelly27/bulletin-board-app:latest
+        docker tag bulletin-board-app:latest ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest
