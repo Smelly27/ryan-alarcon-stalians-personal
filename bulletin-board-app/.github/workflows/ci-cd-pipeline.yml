@@ -26,16 +26,19 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
+          cd bulletin-board-app
           npm install
 
       # Step 4: Run tests
       - name: Run tests
         run: |
+          cd bulletin-board-app
           npm run test
 
       # Step 5: Run tests with coverage
       - name: Run test coverage
         run: |
+          cd bulletin-board-app
           npm run test:coverage
 
       # Step 6: Build Docker image
