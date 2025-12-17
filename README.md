@@ -15,7 +15,7 @@ Change the directory to `node-bulletin-board` and follow the commands:
 
 ## Using Docker
 
-Clone the repository and run the following command:
+Clone the repository and run the following commands:
 
 ```
 docker build -t bulletin-board .
