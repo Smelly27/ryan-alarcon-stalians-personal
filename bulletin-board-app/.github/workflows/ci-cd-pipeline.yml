@@ -41,6 +41,7 @@ jobs:
       # Step 6: Build Docker image
       - name: Build Docker image
         run: |
+          cd bulletin-board-app  # Ensure we're in the correct directory where the Dockerfile is located
           docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest .
 
       # Step 7: Push Docker image to Docker Hub
