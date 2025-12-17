@@ -11,24 +11,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm run test
-
-      - name: Build and deploy Docker image
-        run: |
-          docker build -t bulletin-board-app:latest .
-          docker tag bulletin-board-app:latest your-dockerhub-username/bulletin-board-app:latest
-          docker push your-dockerhub-username/bulletin-board-app:latest
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+    
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./bulletin-board-app  # Adjusted to point to the correct folder
+    
+    - name: Run tests
+      run: npm run test
+      working-directory: ./bulletin-board-app  # Run tests from the correct directory
+    
+    - name: Run test coverage
+      run: npm run test:coverage
+      working-directory: ./bulletin-board-app  # Run test coverage from the correct directory
+    
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/bulletin-board-app:latest .
+      working-directory: ./bulletin-board-app  # Ensure Docker build is executed inside the app directory
